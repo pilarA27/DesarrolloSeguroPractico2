@@ -3,6 +3,15 @@ services:
     build: .
     container_name: cinebuscador4
     ports:
-      - "8080:8080"
+      - "8084:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:h2:file:/data/cine3;AUTO_SERVER=TRUE
+
+  integration-tests:
+    build:
+      context: ./tests
+    profiles: ["test"]
+    environment:
+      - APP_BASE_URL=http://cinebuscador4:8080
+    depends_on:
+      - cinebuscador4
